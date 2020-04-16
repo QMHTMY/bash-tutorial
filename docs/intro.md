@@ -140,3 +140,50 @@ $ echo $BASH_VERSION
 5.0.3(1)-release
 ```
 
+## 更新Shell到最新版本
+首先查看bash版本，可能为如下所示的老版本。
+
+```bash
+$ echo $BASH_VERSION
+4.4.20(1)-release
+```
+
+安装shell，可通过源码安装。
+
+首先访问 http://www.gnu.org/software/bash/bash.html ，在Downloading Bash处下载。一般选择国内镜像如 https://mirrors.ustc.edu.cn/gnu/bash/bash-5.0.tar.gz 。
+
+解压文件并进入目录。
+
+```bash
+$ tar -zxvf bash-5.0.tar.gz
+$ cd bash-5.0 
+```
+
+配置编译选项，生成Makefile。
+
+```bash
+$ ./configure --prefix=/bin/bash5.0
+$ ll Makefile
+-rw-rw-r-- 1 shieber shieber 81K 4月  16 22:38 Makefile
+```
+
+正式编译，需要等待一断时间。
+
+```bash
+$ make
+```
+
+安装，此时会安装到--prefix指定的位置，也就是/bin/bash5.0/。
+
+```bash
+$ sudo make install
+```
+
+此时系统中有原来的/bin/bash，而新bash在/bin/bash5.0/bin/bash，此时可备份原bash并链接新bash。
+
+```bash
+$ sudo mv /bin/bash /bin/bash.back
+$ sudo ln -s /bin/bash5.0/bin/bash /bin/bash
+```
+
+重启系统，现在可使用新bash。
